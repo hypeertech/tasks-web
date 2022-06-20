@@ -1,0 +1,27 @@
+.header {
+  width: 100%;
+  padding-left: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  width: 2.2rem;
+  margin-right: 0.7rem;
+  padding-top: 0.15rem;
+  color: #f8144a;
+}
+
+.title {
+  font-size: 2.6rem;
+  line-height: 3rem;
+  font-weight: 900;
+}
+
+.sub {
+  padding-left: 0.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  opacity: 0.5;
+  vertical-align: baseline;
+}

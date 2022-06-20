@@ -1,0 +1,46 @@
+.task {
+  width: 100%;
+  display: flex;
+  cursor: pointer;
+  box-shadow: none;
+  border-radius: 0.7rem;
+  transition: box-shadow 0.15s linear;
+}
+
+.active {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px,
+    rgba(0, 0, 0, 0.05) 0px 5px 10px;
+}
+
+.title {
+  width: 100%;
+  margin: 0;
+  padding-top: 1.4rem;
+  padding-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.project {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.8rem;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  background-color: #eaeaea;
+  border-radius: var(--border-radius);
+}
+
+
+@media (prefers-color-scheme: dark) {
+  .project {
+    background-color: #2d2c31;
+  }
+}

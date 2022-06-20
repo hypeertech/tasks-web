@@ -1,0 +1,6 @@
+.Popover {
+  background-color: white;
+  border: 0.1rem solid #e4e4e7;
+  border-radius: 0.7rem;
+  z-index: 1;
+}

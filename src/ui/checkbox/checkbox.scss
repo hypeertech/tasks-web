@@ -1,0 +1,93 @@
+.checkbox {
+  --text-color: #fff;
+  --text-line-scale: 0;
+  --text-x: 0px;
+  --border-default: #7F7F85;
+  --border-hover: #E4E4E7;
+  --checkbox-active: var(--accent-color);
+  --active-tick: #ffffff;
+  --checkbox-lines-offset: 13.5px;
+  --tick-main-color: white;
+  display: block;
+  padding: 15px 12px;
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  svg {
+    display: block;
+    position: absolute;
+  }
+  input {
+    display: block;
+    outline: none;
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    & + svg {
+      width: 21px;
+      height: 18px;
+      left: 12px;
+      top: 15px;
+      color: var(--checkbox-active);
+      transition: color 0.25s linear;
+      .shape {
+        stroke-width: 1.5px;
+        stroke: var(--border, var(--border-default));
+        fill: var(--background, none);
+        transition: fill 0.25s linear, stroke 0.25s linear;
+      }
+      .tick {
+        stroke-dasharray: 20;
+        stroke-dashoffset: var(--checkbox-tick-offset, 20px);
+        transition: stroke-dashoffset var(--checkbox-tick-duration, 0.15s)
+          var(--checkbox-tick-easing, ease);
+        &.mask {
+          stroke: var(--active-tick);
+        }
+      }
+      & + svg {
+        width: 11px;
+        height: 11px;
+        fill: none;
+        stroke: var(--checkbox-active);
+        stroke-width: 1.25;
+        stroke-linecap: round;
+        top: 9px;
+        right: 2px;
+        stroke-dasharray: 4.5px;
+        stroke-dashoffset: var(--checkbox-lines-offset);
+        pointer-events: none;
+        will-change: stroke-dashoffset;
+      }
+    }
+    &:checked {
+      & + svg {
+        --background: var(--checkbox-active);
+        --border: var(--checkbox-active);
+        --checkbox-tick-duration: 0.2s;
+        --checkbox-tick-easing: cubic-bezier(0, 0.45, 1, 0.5);
+        --checkbox-tick-offset: 0;
+      }
+    }
+  }
+  &:hover {
+    input {
+      &:not(:checked) {
+        & + svg {
+          --border: var(--border-hover);
+        }
+      }
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .checkbox {
+    --tick-main-color: #27262b;
+  }
+}
+

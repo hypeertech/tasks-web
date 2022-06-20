@@ -1,0 +1,39 @@
+.day-picker {
+  .rdp {
+    --rdp-cell-size: 3.5rem;
+    --rdp-accent-color: var(--accent-color);
+    --rdp-background-color: var(--background-color);
+    --rdp-outline: none;
+    --rdp-outline-selected: none;
+    font-size: 1.5rem;
+  }
+
+  .rdp-months,
+  .rdp-month,
+  .rdp-table,
+  .rdp-head,
+  .rdp-head_row,
+  .rdp-head_cell,
+  .rdp-tbody,
+  .rdp-cell,
+  .rdp-row,
+  .rdp-day {
+    width: inherit;
+  }
+
+  .rdp {
+    width: 100%;
+    margin: 0;
+  }
+
+  .rdp-table {
+    table-layout: fixed;
+    max-width: initial;
+  }
+
+  .rdp-weeknumber,
+  .rdp-day {
+    max-width: initial;
+    border-radius: var(--border-radius) !important;
+  }
+}

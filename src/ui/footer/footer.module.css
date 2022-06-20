@@ -1,0 +1,48 @@
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  background-color: #faf9fe;
+  z-index: 2;
+  will-change: height;
+  transition: height 0.15s ease-in;
+}
+
+@media (prefers-color-scheme: dark) {
+  .footer {
+    border-color: #2e2d31;
+    background-color: #2d2c31;
+  }
+}
+
+@media (min-width: 768px) {
+  .footer {
+    display: none;
+  }
+}
+
+.trigger {
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  width: 2.5rem;
+  height: 0.4rem;
+  background-color: #2d2c31;
+  border-radius: 0.5rem;
+  opacity: 0.5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .button {
+    background-color: white;
+  }
+}

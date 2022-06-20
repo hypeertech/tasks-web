@@ -1,0 +1,17 @@
+.textarea {
+  width: 100%;
+  padding: 1.4rem 0 0.3rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  font-family: var(--font-sans-serif);
+  background-color: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .textarea {
+    color: white;
+  }
+}

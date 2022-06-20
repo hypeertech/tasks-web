@@ -1,0 +1,35 @@
+.container {
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-grow: 0;
+  flex-shrink: 0;
+  background-color: #faf9fe;
+  border-right: #f0f1f2 0.1rem solid;
+  will-change: width;
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    border-color: #2e2d31;
+    background-color: #2d2c31;
+  }
+}
+
+.resizer {
+  position: absolute;
+  height: 100%;
+  right: -0.5rem;
+  width: 1rem;
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+}
+
+@media (pointer: coarse) {
+  .resizer {
+    right: -2.5rem;
+    width: 5rem;
+  }
+}
