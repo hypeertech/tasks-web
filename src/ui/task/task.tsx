@@ -84,6 +84,7 @@ export const Task: React.FC<TaskProps> = ({
   });
 
   const onBoxClick = (event: MouseEvent<HTMLDivElement>) => {
+    // @ts-ignore
     if (!event.target.closest('.check')) {
       setActive(true);
     }
@@ -125,6 +126,7 @@ export const Task: React.FC<TaskProps> = ({
                   showOutsideDays
                   required
                   mode="single"
+                  // @ts-ignore
                   selected={taskDueDate}
                   onSelect={value => setTaskDueDate(value!)}
                 />
