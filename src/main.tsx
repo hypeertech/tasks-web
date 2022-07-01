@@ -1,20 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Provider } from 'urql';
 import './index.css';
-import { client } from './gql-client';
+import { client } from './apollo-client';
 import { Auth } from './layouts/auth';
 import { Default } from './layouts/default';
-import { LoginPage } from './pages/auth/login';
-import { PageAll } from './pages/all';
+import { LoginPage } from './pages/auth/login/login';
+import { PageAll } from './pages/all/all';
 import { PageScheduleDate } from './pages/schedule/date';
 import { PageProjectId } from './pages/project/id';
-import { PageFilterTrash } from './pages/filter/trash';
+import { PageFilterTrash } from './pages/filter/trash/trash';
+import { ApolloProvider } from '@apollo/client';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider value={client}>
+    <ApolloProvider client={client}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Default />}>
@@ -29,7 +29,7 @@ ReactDOM.render(
           </Route>
         </Routes>
       </BrowserRouter>
-    </Provider>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

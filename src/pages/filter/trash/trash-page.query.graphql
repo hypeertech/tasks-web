@@ -1,0 +1,5 @@
+query TrashPage($filter: TaskFilter) {
+  taskCollection(filter: $filter) {
+    ...TaskFields
+  }
+}

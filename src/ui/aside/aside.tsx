@@ -1,48 +1,25 @@
 import React, { FormEvent, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { DayPicker } from '../day-picker/day-picker';
 import s from './aside.module.css';
 import { AsideResizable } from './aside-resizable';
-import { useMutation, useQuery } from 'urql';
-import { NavLink } from 'react-router-dom';
-
-const PROJECT_COLLECTION = `
-  query ProjectCollection {
-    projectCollection {
-      id
-      name
-    }
-  }
-`;
-
-const PROJECT_ADD = `
-  mutation ProjectAdd($input: ProjectAddInput!) {
-    project {
-      add(input: $input) {
-        record {
-          id
-          name
-        }
-      }
-    }
-  }
-`;
+import {
+  useProjectAddMutation,
+  useProjectCollectionQuery,
+} from '../../generated/graphql';
 
 export const Aside: React.FC = () => {
-  const [result, reexecuteQuery] = useQuery({
-    query: PROJECT_COLLECTION,
-  });
-
-  const [addResult, add] = useMutation(PROJECT_ADD);
+  const [add] = useProjectAddMutation();
   const [projectAddForm, setProjectAddForm] = useState({ name: '' });
   const onProjectAddSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await add({ input: projectAddForm });
+    await add({ variables: { input: projectAddForm } });
   };
 
-  const { data, fetching, error } = result;
+  const { loading, error, data } = useProjectCollectionQuery();
 
-  if (fetching) return <p>Loading...</p>;
-  if (error) return <p>Oh no... {error.message}</p>;
+  if (loading) return <>'Loading...'</>;
+  if (error) return <>`Error! ${error.message}`</>;
 
   return (
     <div className={s.aside}>
@@ -72,7 +49,7 @@ export const Aside: React.FC = () => {
             <span className={s['menu-title']}>Projects</span>
             <nav>
               <ul>
-                {data.projectCollection.map((project: any) => (
+                {data!.projectCollection!.map((project: any) => (
                   <li key={project.id}>
                     <NavLink
                       to={`/project/${project.id}`}

@@ -1,5 +1,4 @@
 import React, { useState, MouseEvent, useRef, Fragment } from 'react';
-import { useMutation } from 'urql';
 import s from './task.module.css';
 import { Checkbox } from '../checkbox/checkbox';
 import { useClickAway } from 'react-use';
@@ -7,6 +6,10 @@ import { TaskTitle } from '../task-title/task-title';
 import { DateInput } from '../date-input/date-input';
 import { DayPicker } from 'react-day-picker';
 import { isEqual, parseISO } from 'date-fns';
+import {
+  useTaskEditMutation,
+  useTaskRemoveMutation,
+} from '../../generated/graphql';
 
 export interface TaskProps {
   readonly id: string;
@@ -18,37 +21,6 @@ export interface TaskProps {
     name: string;
   };
 }
-
-const TASK_EDIT = `
-  mutation TaskEdit($input: TaskEditInput!) {
-    task {
-      edit(input: $input) {
-        record {
-          id
-          title
-          isCompleted
-          isRemoved
-          dueDate
-          ownerId
-        }
-        recordId
-      }
-    }
-  }
-`;
-
-const TASK_REMOVE = `
-  mutation TaskRemove($input: TaskRemoveInput!) {
-    task {
-      remove(input: $input) {
-        record {
-          id
-          isRemoved
-        }
-      }
-    }
-  }
-`;
 
 export const Task: React.FC<TaskProps> = ({
   id,
@@ -64,8 +36,8 @@ export const Task: React.FC<TaskProps> = ({
     dueDate ? parseISO(dueDate) : null
   );
 
-  const [editResult, edit] = useMutation(TASK_EDIT);
-  const [removeResult, remove] = useMutation(TASK_REMOVE);
+  const [edit] = useTaskEditMutation();
+  const [remove] = useTaskRemoveMutation();
 
   useClickAway(boxRef, async () => {
     setActive(false);
@@ -79,7 +51,9 @@ export const Task: React.FC<TaskProps> = ({
     };
 
     if (title !== taskTitle || isDueDateChanged()) {
-      await edit({ input: { id, title: taskTitle, dueDate: taskDueDate } });
+      await edit({
+        variables: { input: { id, title: taskTitle, dueDate: taskDueDate } },
+      });
     }
   });
 
@@ -105,7 +79,9 @@ export const Task: React.FC<TaskProps> = ({
               await new Promise(resolve =>
                 setTimeout(async () => resolve(''), 500)
               );
-            await edit({ input: { id, isCompleted: event.target.checked } });
+            await edit({
+              variables: { input: { id, isCompleted: event.target.checked } },
+            });
           }}
         />
       </div>
@@ -138,7 +114,7 @@ export const Task: React.FC<TaskProps> = ({
             </DateInput>
             <button
               onClick={async () => {
-                await remove({ input: { id } });
+                await remove({ variables: { input: { id } } });
               }}
             >
               X

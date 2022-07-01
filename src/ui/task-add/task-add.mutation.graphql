@@ -1,0 +1,10 @@
+mutation TaskAdd($input: TaskAddInput!) {
+  task {
+    add(input: $input) {
+      record {
+        ...TaskFields
+      }
+      recordId
+    }
+  }
+}

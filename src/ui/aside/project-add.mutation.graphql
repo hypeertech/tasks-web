@@ -1,0 +1,11 @@
+mutation ProjectAdd($input: ProjectAddInput!) {
+  project {
+    add(input: $input) {
+      record {
+        id
+        name
+      }
+      recordId
+    }
+  }
+}

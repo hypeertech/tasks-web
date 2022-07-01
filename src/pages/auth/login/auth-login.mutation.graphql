@@ -1,0 +1,7 @@
+mutation AuthLogin($input: AuthLoginInput!) {
+  auth {
+    login(input: $input) {
+      __typename
+    }
+  }
+}

@@ -1,16 +1,6 @@
 import { FC, FormEvent, useState } from 'react';
-import { useMutation } from 'urql';
 import { useLocation, useNavigate } from 'react-router-dom';
-
-const AUTH_LOGIN = `
-  mutation ($input: AuthLoginInput!) {
-    auth {
-      login(input: $input) {
-        __typename
-      }
-    }
-  }
-`;
+import { useAuthLoginMutation } from '../../../generated/graphql';
 
 export const LoginPage: FC = () => {
   const navigate = useNavigate();
@@ -18,11 +8,11 @@ export const LoginPage: FC = () => {
 
   const from = location.state?.from?.pathname || '/';
   const [form, setForm] = useState({ username: '', password: '' });
-  const [authLoginResult, authLogin] = useMutation(AUTH_LOGIN);
+  const [login] = useAuthLoginMutation();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await authLogin({ input: form });
+    await login({ variables: { input: form } });
     navigate(from, { replace: true });
   };
 

@@ -1,0 +1,10 @@
+mutation TaskRemove($input: TaskRemoveInput!) {
+  task {
+    remove(input: $input) {
+      record {
+        ...TaskFields
+      }
+      recordId
+    }
+  }
+}

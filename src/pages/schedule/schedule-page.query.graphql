@@ -1,0 +1,5 @@
+query SchedulePage($filter: TaskFilter) {
+  taskCollection(filter: $filter) {
+    ...TaskFields
+  }
+}

@@ -1,0 +1,5 @@
+query AllPage($filter: TaskFilter) {
+  taskCollection(filter: $filter) {
+    ...TaskFields
+  }
+}
