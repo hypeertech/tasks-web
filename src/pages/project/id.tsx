@@ -1,6 +1,9 @@
 import React, { FC, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
-import { useProjectPageQuery } from '../../generated/graphql';
+import {
+  TaskFieldsFragment,
+  useProjectPageQuery,
+} from '../../generated/graphql';
 import { Header } from '../../ui/header/header';
 import { TaskList } from '../../ui/task-list/task-list';
 
@@ -22,7 +25,7 @@ export const PageProjectId: FC = () => {
   return (
     <Fragment>
       <Header title={data!.taskCollection![0]?.project?.name || 'Project'} />
-      <TaskList tasks={data!.taskCollection!} />
+      <TaskList tasks={data!.taskCollection! as TaskFieldsFragment[]} />
     </Fragment>
   );
 };

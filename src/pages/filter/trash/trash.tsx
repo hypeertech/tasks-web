@@ -1,5 +1,8 @@
 import React, { FC, Fragment } from 'react';
-import { useTrashPageQuery } from '../../../generated/graphql';
+import {
+  TaskFieldsFragment,
+  useTrashPageQuery,
+} from '../../../generated/graphql';
 import { Header } from '../../../ui/header/header';
 import { TaskList } from '../../../ui/task-list/task-list';
 
@@ -18,7 +21,7 @@ export const PageFilterTrash: FC = () => {
   return (
     <Fragment>
       <Header title="Trash" />
-      <TaskList tasks={data!.taskCollection!} />
+      <TaskList tasks={data!.taskCollection! as TaskFieldsFragment[]} />
     </Fragment>
   );
 };

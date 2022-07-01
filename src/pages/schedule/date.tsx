@@ -2,7 +2,10 @@ import React, { FC, Fragment, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { formatISO, parseISO } from 'date-fns';
-import { useSchedulePageQuery } from '../../generated/graphql';
+import {
+  TaskFieldsFragment,
+  useSchedulePageQuery,
+} from '../../generated/graphql';
 import { dateAtom } from '../../atoms/date';
 import { TaskList } from '../../ui/task-list/task-list';
 import { Header } from '../../ui/header/header';
@@ -31,7 +34,7 @@ export const PageScheduleDate: FC = () => {
   return (
     <Fragment>
       <Header date={date} />
-      <TaskList tasks={data!.taskCollection!} />
+      <TaskList tasks={data!.taskCollection! as TaskFieldsFragment[]} />
     </Fragment>
   );
 };
