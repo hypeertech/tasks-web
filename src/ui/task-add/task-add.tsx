@@ -31,12 +31,14 @@ export const TaskAdd: FC = () => {
   const [result, reexecuteQuery] = useQuery({
     query: PROJECT_COLLECTION,
   });
+
   const [form, setForm] = useState({ title: '', projectId: '' });
   const [addResult, add] = useMutation(TASK_ADD);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await add({ input: form });
+    setForm({ ...form, title: '' })
   };
 
   const { data, fetching, error } = result;
