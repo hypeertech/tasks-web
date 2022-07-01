@@ -9,7 +9,7 @@ export const PageProjectId: FC = () => {
   return (
     <Fragment>
       <Header title="Project" />
-      <TaskList filter={{ project: id! }} />
+      <TaskList filter={{ project: id!, isRemoved: false }} />
     </Fragment>
   );
 };
