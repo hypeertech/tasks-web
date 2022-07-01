@@ -1,0 +1,16 @@
+fragment TaskFields on Task {
+  id
+  title
+  isCompleted
+  isRemoved
+  dueDate
+  project {
+    id
+    name
+  }
+  projectId
+  owner {
+    id
+  }
+  ownerId
+}

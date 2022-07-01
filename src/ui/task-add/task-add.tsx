@@ -1,54 +1,27 @@
 import React, { FC, FormEvent, useEffect, useState } from 'react';
-import { useMutation, useQuery } from 'urql';
-
-const TASK_ADD = `
-  mutation TaskAdd($input: TaskAddInput!) {
-    task {
-      add(input: $input) {
-        record {
-          id
-          title
-          isCompleted
-          dueDate
-          ownerId
-        }
-        recordId
-      }
-    }
-  }
-`;
-
-const PROJECT_COLLECTION = `
-  query ProjectCollection {
-    projectCollection {
-      id
-      name
-    }
-  }
-`;
+import {
+  useProjectCollectionQuery,
+  useTaskAddMutation,
+} from '../../generated/graphql';
 
 export const TaskAdd: FC = () => {
-  const [result, reexecuteQuery] = useQuery({
-    query: PROJECT_COLLECTION,
-  });
+  const { loading, error, data } = useProjectCollectionQuery();
 
   const [form, setForm] = useState({ title: '', projectId: '' });
-  const [addResult, add] = useMutation(TASK_ADD);
+  const [add] = useTaskAddMutation();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await add({ input: form });
-    setForm({ ...form, title: '' })
+    await add({ variables: { input: form } });
+    setForm({ ...form, title: '' });
   };
 
-  const { data, fetching, error } = result;
-
-  if (fetching) return <p>Loading...</p>;
-  if (error) return <p>Oh no... {error.message}</p>;
+  if (loading) return <>'Loading...'</>;
+  if (error) return <>`Error! ${error.message}`</>;
 
   useEffect(() => {
-    setForm({ ...form, projectId: data.projectCollection[0].id })
-  }, [])
+    setForm({ ...form, projectId: data!.projectCollection![0]!.id });
+  }, []);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -61,7 +34,7 @@ export const TaskAdd: FC = () => {
       <select
         onChange={event => setForm({ ...form, projectId: event.target.value })}
       >
-        {data.projectCollection.map((project: any) => (
+        {data!.projectCollection!.map((project: any) => (
           <option value={project.id} key={project.id}>
             {project.name}
           </option>
