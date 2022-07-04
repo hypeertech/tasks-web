@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
-import { client } from './apollo-client';
 import { Auth } from './layouts/auth';
 import { Default } from './layouts/default';
 import { LoginPage } from './pages/auth/login/login';
@@ -10,12 +9,12 @@ import { PageAll } from './pages/all/all';
 import { PageScheduleDate } from './pages/schedule/date';
 import { PageProjectId } from './pages/project/id';
 import { PageFilterTrash } from './pages/filter/trash/trash';
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from './apollo-provider';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <BrowserRouter>
+    <BrowserRouter>
+      <ApolloProvider>
         <Routes>
           <Route path="/" element={<Default />}>
             <Route index element={<div />} />
@@ -28,8 +27,8 @@ ReactDOM.render(
             <Route path="/login" element={<LoginPage />} />
           </Route>
         </Routes>
-      </BrowserRouter>
-    </ApolloProvider>
+      </ApolloProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
