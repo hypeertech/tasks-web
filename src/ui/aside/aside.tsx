@@ -20,7 +20,6 @@ export const Aside: React.FC = () => {
     fetchPolicy: 'cache-first',
   });
 
-  if (loading) return <>'Loading...'</>;
   if (error) return <>`Error! ${error.message}`</>;
 
   return (
@@ -50,22 +49,24 @@ export const Aside: React.FC = () => {
           <div className={s.menu}>
             <span className={s['menu-title']}>Projects</span>
             <nav>
-              <ul>
-                {data!.projectCollection!.map((project: any) => (
-                  <li key={project.id}>
-                    <NavLink
-                      to={`/project/${project.id}`}
-                      className={({ isActive }) =>
-                        isActive
-                          ? `${s['menu-title']} ${s['menu-title--active']}`
-                          : s['menu-title']
-                      }
-                    >
-                      {project.name}
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
+              {loading ? null : (
+                <ul>
+                  {data!.projectCollection!.map((project: any) => (
+                    <li key={project.id}>
+                      <NavLink
+                        to={`/project/${project.id}`}
+                        className={({ isActive }) =>
+                          isActive
+                            ? `${s['menu-title']} ${s['menu-title--active']}`
+                            : s['menu-title']
+                        }
+                      >
+                        {project.name}
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </nav>
             <form onSubmit={onProjectAddSubmit}>
               <input
