@@ -1,16 +1,18 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Aside } from '../ui/aside/aside';
 import { Footer } from '../ui/footer/footer';
 
 export const Default: FC = () => {
+  const [isAsideVisible, setAsideVisible] = useState(false);
+
   return (
     <div className="app">
-      <Aside />
+      <Aside isVisible={isAsideVisible} />
       <main className="main">
         <Outlet />
       </main>
-      <Footer />
+      <Footer onAsideButtonClick={() => setAsideVisible(!isAsideVisible)} />
     </div>
   );
 };

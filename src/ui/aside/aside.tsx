@@ -8,7 +8,11 @@ import {
   useProjectCollectionQuery,
 } from '../../generated/graphql';
 
-export const Aside: React.FC = () => {
+export interface AsideProps {
+  readonly isVisible: boolean;
+}
+
+export const Aside: React.FC<AsideProps> = ({ isVisible }) => {
   const [add] = useProjectAddMutation();
   const [projectAddForm, setProjectAddForm] = useState({ name: '' });
   const onProjectAddSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -23,7 +27,7 @@ export const Aside: React.FC = () => {
   if (error) return <>`Error! ${error.message}`</>;
 
   return (
-    <div className={s.aside}>
+    <div className={isVisible ? s.aside : `${s.aside} ${s.asideVisible}`}>
       <AsideResizable minWidth={250} maxWidth={600}>
         <div style={{ margin: '1rem' }}>
           <DayPicker />

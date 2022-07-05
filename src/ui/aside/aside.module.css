@@ -1,3 +1,7 @@
+.asideVisible {
+  display: flex !important;
+}
+
 .aside {
   display: none;
 }
