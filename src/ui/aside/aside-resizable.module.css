@@ -8,6 +8,8 @@
   background-color: #faf9fe;
   border-right: #f0f1f2 0.1rem solid;
   will-change: width;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 @media (prefers-color-scheme: dark) {
