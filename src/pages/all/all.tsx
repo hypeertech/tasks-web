@@ -1,7 +1,12 @@
 import React, { FC, Fragment } from 'react';
-import { TaskList } from '../../ui/task-list/task-list';
+import {
+  ProjectFieldsFragment,
+  TaskFieldsFragment,
+  useAllPageQuery,
+} from '../../generated/graphql';
 import { Header } from '../../ui/header/header';
-import { TaskFieldsFragment, useAllPageQuery } from '../../generated/graphql';
+import { TaskAdd } from '../../ui/task-add/task-add';
+import { TaskList } from '../../ui/task-list/task-list';
 
 export const PageAll: FC = () => {
   const { loading, error, data } = useAllPageQuery({
@@ -18,6 +23,7 @@ export const PageAll: FC = () => {
   return (
     <Fragment>
       <Header title="All tasks" />
+      <TaskAdd projects={data!.projectCollection as ProjectFieldsFragment[]} />
       <TaskList tasks={data!.taskCollection! as TaskFieldsFragment[]} />
     </Fragment>
   );

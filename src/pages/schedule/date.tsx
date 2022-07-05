@@ -3,12 +3,14 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { formatISO, parseISO } from 'date-fns';
 import {
+  ProjectFieldsFragment,
   TaskFieldsFragment,
   useSchedulePageQuery,
 } from '../../generated/graphql';
 import { dateAtom } from '../../atoms/date';
 import { TaskList } from '../../ui/task-list/task-list';
 import { Header } from '../../ui/header/header';
+import { TaskAdd } from '../../ui/task-add/task-add';
 
 export const PageScheduleDate: FC = () => {
   const location = useLocation();
@@ -34,6 +36,7 @@ export const PageScheduleDate: FC = () => {
   return (
     <Fragment>
       <Header date={date} />
+      <TaskAdd projects={data!.projectCollection as ProjectFieldsFragment[]} />
       <TaskList tasks={data!.taskCollection! as TaskFieldsFragment[]} />
     </Fragment>
   );

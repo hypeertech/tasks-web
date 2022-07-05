@@ -254,7 +254,7 @@ export type AllPageQueryVariables = Exact<{
 }>;
 
 
-export type AllPageQuery = { __typename?: 'Query', taskCollection?: Array<{ __typename?: 'Task', id: any, title: string, isCompleted: boolean, isRemoved: boolean, dueDate?: any | null, projectId: any, ownerId: any, project: { __typename?: 'Project', id?: any | null, name: string }, owner: { __typename?: 'User', id: any } } | null> | null };
+export type AllPageQuery = { __typename?: 'Query', taskCollection?: Array<{ __typename?: 'Task', id: any, title: string, isCompleted: boolean, isRemoved: boolean, dueDate?: any | null, projectId: any, ownerId: any, project: { __typename?: 'Project', id?: any | null, name: string }, owner: { __typename?: 'User', id: any } } | null> | null, projectCollection?: Array<{ __typename?: 'Project', id?: any | null, name: string } | null> | null };
 
 export type AuthLoginMutationVariables = Exact<{
   input: AuthLoginInput;
@@ -275,14 +275,16 @@ export type ProjectPageQueryVariables = Exact<{
 }>;
 
 
-export type ProjectPageQuery = { __typename?: 'Query', taskCollection?: Array<{ __typename?: 'Task', id: any, title: string, isCompleted: boolean, isRemoved: boolean, dueDate?: any | null, projectId: any, ownerId: any, project: { __typename?: 'Project', id?: any | null, name: string }, owner: { __typename?: 'User', id: any } } | null> | null };
+export type ProjectPageQuery = { __typename?: 'Query', taskCollection?: Array<{ __typename?: 'Task', id: any, title: string, isCompleted: boolean, isRemoved: boolean, dueDate?: any | null, projectId: any, ownerId: any, project: { __typename?: 'Project', id?: any | null, name: string }, owner: { __typename?: 'User', id: any } } | null> | null, projectCollection?: Array<{ __typename?: 'Project', id?: any | null, name: string } | null> | null };
 
 export type SchedulePageQueryVariables = Exact<{
   filter?: InputMaybe<TaskFilter>;
 }>;
 
 
-export type SchedulePageQuery = { __typename?: 'Query', taskCollection?: Array<{ __typename?: 'Task', id: any, title: string, isCompleted: boolean, isRemoved: boolean, dueDate?: any | null, projectId: any, ownerId: any, project: { __typename?: 'Project', id?: any | null, name: string }, owner: { __typename?: 'User', id: any } } | null> | null };
+export type SchedulePageQuery = { __typename?: 'Query', taskCollection?: Array<{ __typename?: 'Task', id: any, title: string, isCompleted: boolean, isRemoved: boolean, dueDate?: any | null, projectId: any, ownerId: any, project: { __typename?: 'Project', id?: any | null, name: string }, owner: { __typename?: 'User', id: any } } | null> | null, projectCollection?: Array<{ __typename?: 'Project', id?: any | null, name: string } | null> | null };
+
+export type ProjectFieldsFragment = { __typename?: 'Project', id?: any | null, name: string };
 
 export type ProjectAddMutationVariables = Exact<{
   input: ProjectAddInput;
@@ -319,6 +321,12 @@ export type TaskRemoveMutationVariables = Exact<{
 
 export type TaskRemoveMutation = { __typename?: 'Mutation', task?: { __typename?: 'MutationTask', remove?: { __typename?: 'TaskRemovePayload', recordId?: any | null, record?: { __typename?: 'Task', id: any, title: string, isCompleted: boolean, isRemoved: boolean, dueDate?: any | null, projectId: any, ownerId: any, project: { __typename?: 'Project', id?: any | null, name: string }, owner: { __typename?: 'User', id: any } } | null } | null } | null };
 
+export const ProjectFieldsFragmentDoc = gql`
+    fragment ProjectFields on Project {
+  id
+  name
+}
+    `;
 export const TaskFieldsFragmentDoc = gql`
     fragment TaskFields on Task {
   id
@@ -342,8 +350,12 @@ export const AllPageDocument = gql`
   taskCollection(filter: $filter) {
     ...TaskFields
   }
+  projectCollection {
+    ...ProjectFields
+  }
 }
-    ${TaskFieldsFragmentDoc}`;
+    ${TaskFieldsFragmentDoc}
+${ProjectFieldsFragmentDoc}`;
 
 /**
  * __useAllPageQuery__
@@ -447,8 +459,12 @@ export const ProjectPageDocument = gql`
   taskCollection(filter: $filter) {
     ...TaskFields
   }
+  projectCollection {
+    ...ProjectFields
+  }
 }
-    ${TaskFieldsFragmentDoc}`;
+    ${TaskFieldsFragmentDoc}
+${ProjectFieldsFragmentDoc}`;
 
 /**
  * __useProjectPageQuery__
@@ -482,8 +498,12 @@ export const SchedulePageDocument = gql`
   taskCollection(filter: $filter) {
     ...TaskFields
   }
+  projectCollection {
+    ...ProjectFields
+  }
 }
-    ${TaskFieldsFragmentDoc}`;
+    ${TaskFieldsFragmentDoc}
+${ProjectFieldsFragmentDoc}`;
 
 /**
  * __useSchedulePageQuery__

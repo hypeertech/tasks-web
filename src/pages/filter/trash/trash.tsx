@@ -5,6 +5,7 @@ import {
 } from '../../../generated/graphql';
 import { Header } from '../../../ui/header/header';
 import { TaskList } from '../../../ui/task-list/task-list';
+import { TaskAdd } from '../../../ui/task-add/task-add';
 
 export const PageFilterTrash: FC = () => {
   const { loading, error, data } = useTrashPageQuery({

@@ -16,7 +16,9 @@ export const Aside: React.FC = () => {
     await add({ variables: { input: projectAddForm } });
   };
 
-  const { loading, error, data } = useProjectCollectionQuery();
+  const { loading, error, data } = useProjectCollectionQuery({
+    fetchPolicy: 'cache-first',
+  });
 
   if (loading) return <>'Loading...'</>;
   if (error) return <>`Error! ${error.message}`</>;

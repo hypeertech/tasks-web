@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { Task } from '../task/task';
-import { TaskAdd } from '../task-add/task-add';
 import { TaskFieldsFragment } from '../../generated/graphql';
 
 export interface TaskListProps {
@@ -10,7 +9,6 @@ export interface TaskListProps {
 export const TaskList: FC<TaskListProps> = ({ tasks }) => {
   return (
     <React.Fragment>
-      <TaskAdd />
       {tasks
         .filter((task: any) => !task.isCompleted)
         .map((task: any) => (

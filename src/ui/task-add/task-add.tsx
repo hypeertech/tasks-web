@@ -1,13 +1,17 @@
 import React, { FC, FormEvent, useEffect, useState } from 'react';
 import {
-  useProjectCollectionQuery,
+  Project,
+  ProjectFieldsFragment,
   useTaskAddMutation,
 } from '../../generated/graphql';
 
-export const TaskAdd: FC = () => {
-  const { loading, error, data } = useProjectCollectionQuery();
+export interface TaskAddProps {
+  readonly projects: ProjectFieldsFragment[];
+  readonly defaultProjectId?: Project['id'];
+}
 
-  const [form, setForm] = useState({ title: '', projectId: '' });
+export const TaskAdd: FC<TaskAddProps> = ({ projects, defaultProjectId }) => {
+  const [form, setForm] = useState({ title: '', projectId: defaultProjectId });
   const [add] = useTaskAddMutation();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -15,13 +19,6 @@ export const TaskAdd: FC = () => {
     await add({ variables: { input: form } });
     setForm({ ...form, title: '' });
   };
-
-  if (loading) return <>'Loading...'</>;
-  if (error) return <>`Error! ${error.message}`</>;
-
-  useEffect(() => {
-    setForm({ ...form, projectId: data!.projectCollection![0]!.id });
-  }, []);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -32,9 +29,10 @@ export const TaskAdd: FC = () => {
         onChange={event => setForm({ ...form, title: event.target.value })}
       />
       <select
+        value={form.projectId}
         onChange={event => setForm({ ...form, projectId: event.target.value })}
       >
-        {data!.projectCollection!.map((project: any) => (
+        {projects.map(project => (
           <option value={project.id} key={project.id}>
             {project.name}
           </option>
