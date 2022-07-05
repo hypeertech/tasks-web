@@ -1,0 +1,6 @@
+.box:before,
+.box:after {
+  display: block;
+  height: 0.6rem;
+  content: '';
+}
