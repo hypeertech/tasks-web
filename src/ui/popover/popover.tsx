@@ -1,4 +1,4 @@
-import React, { cloneElement, useState } from 'react';
+import React, { cloneElement, FC, useState } from 'react';
 import {
   Placement,
   offset,
@@ -13,9 +13,9 @@ import {
   useClick,
   FloatingFocusManager,
 } from '@floating-ui/react-dom-interactions';
-import './date-input.css';
+import './popover.css';
 
-interface Props {
+export interface PopoverProps {
   render: (data: {
     close: () => void;
     labelId: string;
@@ -25,7 +25,7 @@ interface Props {
   children: JSX.Element;
 }
 
-export const DateInput = ({ children, render, placement }: Props) => {
+export const Popover: FC<PopoverProps> = ({ children, render, placement }) => {
   const [open, setOpen] = useState(false);
 
   const { x, y, reference, floating, strategy, context } = useFloating({

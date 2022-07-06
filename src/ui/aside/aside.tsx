@@ -9,17 +9,33 @@ import {
 import { MenuGroup } from '../menu/menu-group';
 import { Section } from '../menu/section';
 import { LinkItem } from '../menu/link-item';
+import { useAtom } from 'jotai';
+import { dateAtom } from '../../atoms/date';
+import { useNavigate } from 'react-router-dom';
+import { formatISO } from 'date-fns';
 
 export interface AsideProps {
   readonly isVisible: boolean;
 }
 
 export const Aside: React.FC<AsideProps> = ({ isVisible }) => {
+  const [date, setDate] = useAtom(dateAtom);
+  const navigate = useNavigate();
   const [add] = useProjectAddMutation();
   const [projectAddForm, setProjectAddForm] = useState({ name: '' });
   const onProjectAddSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await add({ variables: { input: projectAddForm } });
+  };
+
+  const onDaySelect = (value?: Date) => {
+    if (value) {
+      const dateISO = formatISO(value, { representation: 'date' });
+      navigate(`/schedule/${dateISO}`);
+    } else {
+      setDate(undefined);
+      navigate('/all');
+    }
   };
 
   const { loading, error, data } = useProjectCollectionQuery({
@@ -32,7 +48,13 @@ export const Aside: React.FC<AsideProps> = ({ isVisible }) => {
     <div className={isVisible ? s.aside : `${s.aside} ${s.asideVisible}`}>
       <AsideResizable minWidth={250} maxWidth={600}>
         <div style={{ margin: '1rem' }}>
-          <DayPicker />
+          <DayPicker
+            shouldFitContainer
+            showOutsideDays
+            mode="single"
+            selected={date}
+            onSelect={onDaySelect}
+          />
           <MenuGroup>
             <Section title={'Filters'}>
               <LinkItem

@@ -1,11 +1,12 @@
 import React, { useState, MouseEvent, useRef, Fragment } from 'react';
+import { isEqual, parseISO } from 'date-fns';
+import { useClickAway } from 'react-use';
 import s from './task.module.css';
 import { Checkbox } from '../checkbox/checkbox';
-import { useClickAway } from 'react-use';
 import { TaskTitle } from '../task-title/task-title';
-import { DateInput } from '../date-input/date-input';
-import { DayPicker } from 'react-day-picker';
-import { isEqual, parseISO } from 'date-fns';
+import { Popover } from '../popover/popover';
+import { DayPicker } from '../day-picker/day-picker';
+import { Tag } from '../tag/tag';
 import {
   useTaskEditMutation,
   useTaskRemoveMutation,
@@ -95,8 +96,8 @@ export const Task: React.FC<TaskProps> = ({
                 setTaskTitle(event.target.value);
               }}
             />
-            <span className={s.project}>{project.name}</span>
-            <DateInput
+            <Tag text={project.name} />
+            <Popover
               render={({ close, labelId, descriptionId }) => (
                 <DayPicker
                   showOutsideDays
@@ -111,7 +112,7 @@ export const Task: React.FC<TaskProps> = ({
               <button>
                 {taskDueDate ? taskDueDate.toDateString() : 'Set date'}
               </button>
-            </DateInput>
+            </Popover>
             <button
               onClick={async () => {
                 await remove({ variables: { input: { id } } });
@@ -123,7 +124,7 @@ export const Task: React.FC<TaskProps> = ({
         ) : (
           <Fragment>
             <p className={s.title}>{taskTitle}</p>
-            <span className={s.project}>{project.name}</span>
+            <Tag text={project.name} />
           </Fragment>
         )}
       </div>

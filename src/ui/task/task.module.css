@@ -26,21 +26,3 @@
   flex-direction: column;
   align-items: flex-start;
 }
-
-.project {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.4rem 0.8rem;
-  font-size: 1.2rem;
-  line-height: 1.2rem;
-  background-color: #eaeaea;
-  border-radius: var(--border-radius);
-}
-
-
-@media (prefers-color-scheme: dark) {
-  .project {
-    background-color: #2d2c31;
-  }
-}

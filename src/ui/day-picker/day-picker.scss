@@ -8,19 +8,6 @@
     font-size: 1.5rem;
   }
 
-  .rdp-months,
-  .rdp-month,
-  .rdp-table,
-  .rdp-head,
-  .rdp-head_row,
-  .rdp-head_cell,
-  .rdp-tbody,
-  .rdp-cell,
-  .rdp-row,
-  .rdp-day {
-    width: inherit;
-  }
-
   .rdp {
     width: 100%;
     margin: 0;
@@ -35,5 +22,20 @@
   .rdp-day {
     max-width: initial;
     border-radius: var(--border-radius) !important;
+  }
+
+  &--fit-container {
+    .rdp-months,
+    .rdp-month,
+    .rdp-table,
+    .rdp-head,
+    .rdp-head_row,
+    .rdp-head_cell,
+    .rdp-tbody,
+    .rdp-cell,
+    .rdp-row,
+    .rdp-day {
+      width: inherit;
+    }
   }
 }
