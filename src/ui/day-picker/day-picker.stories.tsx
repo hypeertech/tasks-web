@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { DayPicker } from './day-picker';
-import { DaySelectionMode } from 'react-day-picker/src/types/DayPickerBase';
+import type { DaySelectionMode } from 'react-day-picker';
 
 export default {
   title: 'DayPicker',
