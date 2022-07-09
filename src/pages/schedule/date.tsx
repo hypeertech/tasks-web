@@ -36,7 +36,11 @@ export const PageScheduleDate: FC = () => {
   return (
     <Fragment>
       <Header date={date} />
-      <TaskAdd projects={data!.projectCollection as ProjectFieldsFragment[]} />
+      <TaskAdd
+        projects={data!.projectCollection as ProjectFieldsFragment[]}
+        defaultProjectId={data!.projectCollection![0]!.id} // FIXME: store default project in account settings
+        defaultDueDate={date}
+      />
       <TaskList tasks={data!.taskCollection! as TaskFieldsFragment[]} />
     </Fragment>
   );
