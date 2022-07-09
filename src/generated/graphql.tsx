@@ -85,7 +85,7 @@ export type MutationTaskDeleteArgs = {
 
 
 export type MutationTaskEditArgs = {
-  input: TaskEditInput;
+  input: Array<TaskEditInput>;
 };
 
 
@@ -208,7 +208,9 @@ export type TaskEditPayload = {
   __typename?: 'TaskEditPayload';
   query?: Maybe<Query>;
   record?: Maybe<Task>;
+  recordCollection?: Maybe<Array<Maybe<Task>>>;
   recordId?: Maybe<Scalars['TaskID']>;
+  recordIdCollection?: Maybe<Array<Maybe<Scalars['TaskID']>>>;
 };
 
 export type TaskFilter = {
@@ -306,11 +308,11 @@ export type TaskAddMutationVariables = Exact<{
 export type TaskAddMutation = { __typename?: 'Mutation', task?: { __typename?: 'MutationTask', add?: { __typename?: 'TaskAddPayload', recordId?: any | null, record?: { __typename?: 'Task', id: any, title: string, isCompleted: boolean, isRemoved: boolean, dueDate?: any | null, projectId: any, ownerId: any, project: { __typename?: 'Project', id?: any | null, name: string }, owner: { __typename?: 'User', id: any } } | null } | null } | null };
 
 export type TaskEditMutationVariables = Exact<{
-  input: TaskEditInput;
+  input: Array<TaskEditInput> | TaskEditInput;
 }>;
 
 
-export type TaskEditMutation = { __typename?: 'Mutation', task?: { __typename?: 'MutationTask', edit?: { __typename?: 'TaskEditPayload', recordId?: any | null, record?: { __typename?: 'Task', id: any, title: string, isCompleted: boolean, isRemoved: boolean, dueDate?: any | null, projectId: any, ownerId: any, project: { __typename?: 'Project', id?: any | null, name: string }, owner: { __typename?: 'User', id: any } } | null } | null } | null };
+export type TaskEditMutation = { __typename?: 'Mutation', task?: { __typename?: 'MutationTask', edit?: { __typename?: 'TaskEditPayload', recordId?: any | null, recordIdCollection?: Array<any | null> | null, record?: { __typename?: 'Task', id: any, title: string, isCompleted: boolean, isRemoved: boolean, dueDate?: any | null, projectId: any, ownerId: any, project: { __typename?: 'Project', id?: any | null, name: string }, owner: { __typename?: 'User', id: any } } | null, recordCollection?: Array<{ __typename?: 'Task', id: any, title: string, isCompleted: boolean, isRemoved: boolean, dueDate?: any | null, projectId: any, ownerId: any, project: { __typename?: 'Project', id?: any | null, name: string }, owner: { __typename?: 'User', id: any } } | null> | null } | null } | null };
 
 export type TaskFieldsFragment = { __typename?: 'Task', id: any, title: string, isCompleted: boolean, isRemoved: boolean, dueDate?: any | null, projectId: any, ownerId: any, project: { __typename?: 'Project', id?: any | null, name: string }, owner: { __typename?: 'User', id: any } };
 
@@ -645,13 +647,17 @@ export type TaskAddMutationHookResult = ReturnType<typeof useTaskAddMutation>;
 export type TaskAddMutationResult = Apollo.MutationResult<TaskAddMutation>;
 export type TaskAddMutationOptions = Apollo.BaseMutationOptions<TaskAddMutation, TaskAddMutationVariables>;
 export const TaskEditDocument = gql`
-    mutation TaskEdit($input: TaskEditInput!) {
+    mutation TaskEdit($input: [TaskEditInput!]!) {
   task {
     edit(input: $input) {
       record {
         ...TaskFields
       }
       recordId
+      recordCollection {
+        ...TaskFields
+      }
+      recordIdCollection
     }
   }
 }

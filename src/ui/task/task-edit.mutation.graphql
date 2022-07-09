@@ -1,10 +1,14 @@
-mutation TaskEdit($input: TaskEditInput!) {
+mutation TaskEdit($input: [TaskEditInput!]!) {
   task {
     edit(input: $input) {
       record {
         ...TaskFields
       }
       recordId
+      recordCollection {
+        ...TaskFields
+      }
+      recordIdCollection
     }
   }
 }

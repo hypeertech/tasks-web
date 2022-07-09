@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent, useRef, Fragment } from 'react';
+import React from 'react';
 import { isEqual, parseISO } from 'date-fns';
 import { useClickAway } from 'react-use';
 import s from './task.module.css';
@@ -21,6 +21,9 @@ export interface TaskProps {
     id: string;
     name: string;
   };
+  readonly onCheckboxChange: (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => void;
 }
 
 export const Task: React.FC<TaskProps> = ({
@@ -29,11 +32,12 @@ export const Task: React.FC<TaskProps> = ({
   isCompleted,
   dueDate,
   project,
+  onCheckboxChange,
 }) => {
-  const boxRef = useRef<HTMLDivElement>(null);
-  const [isActive, setActive] = useState<boolean>(false);
-  const [taskTitle, setTaskTitle] = useState<string>(title);
-  const [taskDueDate, setTaskDueDate] = useState<Date | null>(
+  const boxRef = React.useRef<HTMLDivElement>(null);
+  const [isActive, setActive] = React.useState<boolean>(false);
+  const [taskTitle, setTaskTitle] = React.useState<string>(title);
+  const [taskDueDate, setTaskDueDate] = React.useState<Date | null>(
     dueDate ? parseISO(dueDate) : null
   );
 
@@ -58,7 +62,7 @@ export const Task: React.FC<TaskProps> = ({
     }
   });
 
-  const onBoxClick = (event: MouseEvent<HTMLDivElement>) => {
+  const onBoxClick = (event: React.MouseEvent<HTMLDivElement>) => {
     // @ts-ignore
     if (!event.target.closest('.check')) {
       setActive(true);
@@ -75,15 +79,7 @@ export const Task: React.FC<TaskProps> = ({
         <Checkbox
           uid={id}
           isChecked={isCompleted}
-          onChange={async event => {
-            if (event.target.checked)
-              await new Promise(resolve =>
-                setTimeout(async () => resolve(''), 500)
-              );
-            await edit({
-              variables: { input: { id, isCompleted: event.target.checked } },
-            });
-          }}
+          onChange={onCheckboxChange}
         />
       </div>
 
@@ -122,10 +118,10 @@ export const Task: React.FC<TaskProps> = ({
             </button>
           </>
         ) : (
-          <Fragment>
+          <>
             <p className={s.title}>{taskTitle}</p>
             <Tag text={project.name} />
-          </Fragment>
+          </>
         )}
       </div>
     </div>
