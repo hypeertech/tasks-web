@@ -2,14 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
-import { Auth } from './layouts/auth';
-import { Default } from './layouts/default';
-import { LoginPage } from './pages/auth/login/login';
+import { ApolloProvider } from './apollo-provider';
+import { Auth } from './layouts/auth/auth';
+import { Default } from './layouts/default/default';
 import { PageAll } from './pages/all/all';
 import { PageScheduleDate } from './pages/schedule/date';
 import { PageProjectId } from './pages/project/id';
 import { PageFilterTrash } from './pages/filter/trash/trash';
-import { ApolloProvider } from './apollo-provider';
+import { LogInPage } from './pages/login/login';
+import { SignUpPage } from './pages/signup/signup';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -24,7 +25,8 @@ ReactDOM.render(
             <Route path="/all" element={<PageAll />} />
           </Route>
           <Route element={<Auth />}>
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/login" element={<LogInPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
           </Route>
         </Routes>
       </ApolloProvider>

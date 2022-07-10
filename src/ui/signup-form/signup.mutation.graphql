@@ -1,0 +1,10 @@
+mutation UserSignUp($input: UserSignUpInput!) {
+  user {
+    signUp(input: $input) {
+      record {
+        ...UserFields
+      }
+      recordId
+    }
+  }
+}

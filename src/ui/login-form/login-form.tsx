@@ -1,8 +1,11 @@
 import { FC, FormEvent, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuthLoginMutation } from '../../../generated/graphql';
+import s from './login-form.module.css';
+import { useAuthLoginMutation } from '../../generated/graphql';
+import { TextField } from '../text-field/text-field';
+import { Button } from '../button/button';
 
-export const LoginPage: FC = () => {
+export const LoginForm: FC = () => {
   const navigate = useNavigate();
   const location = useLocation() as any;
 
@@ -17,20 +20,24 @@ export const LoginPage: FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
+    <form className={s.box} onSubmit={handleSubmit}>
+      <TextField
         type={'text'}
         placeholder={'Username'}
         value={form.username}
+        required
         onChange={e => setForm({ ...form, username: e.target.value })}
       />
-      <input
+      <TextField
         type={'password'}
         placeholder={'Password'}
         value={form.password}
+        required
         onChange={e => setForm({ ...form, password: e.target.value })}
       />
-      <button type={'submit'}>Login</button>
+      <Button style={{ marginTop: '1rem' }} type={'submit'}>
+        Login
+      </Button>
     </form>
   );
 };

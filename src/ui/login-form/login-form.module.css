@@ -1,0 +1,11 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto 2.4rem;
+  width: 40rem;
+  padding: 32px 40px;
+  background: rgb(255, 255, 255);
+  border-radius: var(--border-radius);
+  box-shadow: rgb(0 0 0 / 10%) 0 0 1rem;
+  color: rgb(94, 108, 132);
+}

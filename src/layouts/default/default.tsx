@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Aside } from '../ui/aside/aside';
-import { Footer } from '../ui/footer/footer';
+import { Aside } from '../../ui/aside/aside';
+import { Footer } from '../../ui/footer/footer';
 
 export const Default: FC = () => {
   const [isAsideVisible, setAsideVisible] = useState(false);
