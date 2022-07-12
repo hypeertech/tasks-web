@@ -5,6 +5,7 @@ import { formatISO, parseISO } from 'date-fns';
 import {
   ProjectFieldsFragment,
   TaskFieldsFragment,
+  TaskSort,
   useSchedulePageQuery,
 } from '../../generated/graphql';
 import { dateAtom } from '../../atoms/date';
@@ -27,6 +28,7 @@ export const PageScheduleDate: FC = () => {
         dueDate: formatISO(date || new Date(), { representation: 'date' }),
         isRemoved: false,
       },
+      sort: TaskSort.DueDateAsc,
     },
   });
 

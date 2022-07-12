@@ -1,5 +1,5 @@
-query SchedulePage($filter: TaskFilter) {
-  taskCollection(filter: $filter) {
+query SchedulePage($filter: TaskFilter, $sort: TaskSort) {
+  taskCollection(filter: $filter, sort: $sort) {
     ...TaskFields
   }
   projectCollection {

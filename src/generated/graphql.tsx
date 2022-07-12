@@ -148,6 +148,7 @@ export type QueryTaskArgs = {
 
 export type QueryTaskCollectionArgs = {
   filter?: InputMaybe<TaskFilter>;
+  sort?: InputMaybe<TaskSort>;
 };
 
 
@@ -231,6 +232,11 @@ export type TaskRemovePayload = {
   recordId?: Maybe<Scalars['TaskID']>;
 };
 
+export enum TaskSort {
+  DueDateAsc = 'DUE_DATE_ASC',
+  DueDateDesc = 'DUE_DATE_DESC'
+}
+
 export type User = {
   __typename?: 'User';
   /** User ID */
@@ -281,6 +287,7 @@ export type ProjectPageQuery = { __typename?: 'Query', taskCollection?: Array<{ 
 
 export type SchedulePageQueryVariables = Exact<{
   filter?: InputMaybe<TaskFilter>;
+  sort?: InputMaybe<TaskSort>;
 }>;
 
 
@@ -510,8 +517,8 @@ export type ProjectPageQueryHookResult = ReturnType<typeof useProjectPageQuery>;
 export type ProjectPageLazyQueryHookResult = ReturnType<typeof useProjectPageLazyQuery>;
 export type ProjectPageQueryResult = Apollo.QueryResult<ProjectPageQuery, ProjectPageQueryVariables>;
 export const SchedulePageDocument = gql`
-    query SchedulePage($filter: TaskFilter) {
-  taskCollection(filter: $filter) {
+    query SchedulePage($filter: TaskFilter, $sort: TaskSort) {
+  taskCollection(filter: $filter, sort: $sort) {
     ...TaskFields
   }
   projectCollection {
@@ -534,6 +541,7 @@ ${ProjectFieldsFragmentDoc}`;
  * const { data, loading, error } = useSchedulePageQuery({
  *   variables: {
  *      filter: // value for 'filter'
+ *      sort: // value for 'sort'
  *   },
  * });
  */
