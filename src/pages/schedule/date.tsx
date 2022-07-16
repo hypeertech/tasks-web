@@ -22,7 +22,7 @@ export const PageScheduleDate: FC = () => {
     setDate(parseISO(dateParam!));
   }, [location]);
 
-  const { loading, error, data } = useSchedulePageQuery({
+  const { loading, error, data, refetch } = useSchedulePageQuery({
     variables: {
       filter: {
         dueDate: formatISO(date || new Date(), { representation: 'date' }),
@@ -42,6 +42,7 @@ export const PageScheduleDate: FC = () => {
         projects={data!.projectCollection as ProjectFieldsFragment[]}
         defaultProjectId={data!.projectCollection![0]!.id} // FIXME: store default project in account settings
         defaultDueDate={date}
+        onAdd={() => refetch()}
       />
       <TaskList tasks={data!.taskCollection! as TaskFieldsFragment[]} />
     </Fragment>

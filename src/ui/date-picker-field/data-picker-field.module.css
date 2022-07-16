@@ -1,0 +1,16 @@
+.box {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.label {
+  padding-left: 0.3rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+}

@@ -41,6 +41,7 @@ export const ApolloProvider: FC = ({ children }) => {
   const client = new ApolloClient({
     link: from([errorLink, httpLink]),
     cache: new InMemoryCache(),
+    connectToDevTools: true,
   });
 
   return <_ApolloProvider client={client}>{children}</_ApolloProvider>;

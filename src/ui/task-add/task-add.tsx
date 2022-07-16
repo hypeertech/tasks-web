@@ -6,17 +6,21 @@ import {
 } from '../../generated/graphql';
 import { Popover } from '../popover/popover';
 import { DayPicker } from '../day-picker/day-picker';
+import { CalendarClock } from '../icons/calendar-clock';
+import { DatePickerField } from '../date-picker-field/date-picker-field';
 
 export interface TaskAddProps {
   readonly projects: ProjectFieldsFragment[];
   readonly defaultProjectId?: Project['id'];
   readonly defaultDueDate?: Date;
+  readonly onAdd?: () => void;
 }
 
 export const TaskAdd: React.FC<TaskAddProps> = ({
   projects,
   defaultProjectId,
   defaultDueDate,
+  onAdd,
 }) => {
   const [form, setForm] = React.useState<{
     title: string;
@@ -32,6 +36,11 @@ export const TaskAdd: React.FC<TaskAddProps> = ({
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await add({ variables: { input: form } });
+
+    if (onAdd) {
+      onAdd();
+    }
+
     setForm({ ...form, title: '' });
   };
 
@@ -43,22 +52,10 @@ export const TaskAdd: React.FC<TaskAddProps> = ({
         value={form.title}
         onChange={event => setForm({ ...form, title: event.target.value })}
       />
-      <Popover
-        render={({ close, labelId, descriptionId }) => (
-          <DayPicker
-            showOutsideDays
-            required
-            mode="single"
-            // @ts-ignore
-            selected={form.dueDate}
-            onSelect={value => setForm({ ...form, dueDate: value })}
-          />
-        )}
-      >
-        <button>
-          {form.dueDate ? form.dueDate.toDateString() : 'Set date'}
-        </button>
-      </Popover>
+      <DatePickerField
+        value={form.dueDate}
+        onChange={value => setForm({ ...form, dueDate: value })}
+      />
       <select
         value={form.projectId}
         onChange={event => setForm({ ...form, projectId: event.target.value })}

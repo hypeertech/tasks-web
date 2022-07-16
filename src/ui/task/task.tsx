@@ -11,6 +11,7 @@ import {
   useTaskEditMutation,
   useTaskRemoveMutation,
 } from '../../generated/graphql';
+import { DatePickerField } from '../date-picker-field/date-picker-field';
 
 export interface TaskProps {
   readonly id: string;
@@ -93,22 +94,11 @@ export const Task: React.FC<TaskProps> = ({
               }}
             />
             <Tag text={project.name} />
-            <Popover
-              render={({ close, labelId, descriptionId }) => (
-                <DayPicker
-                  showOutsideDays
-                  required
-                  mode="single"
-                  // @ts-ignore
-                  selected={taskDueDate}
-                  onSelect={value => setTaskDueDate(value!)}
-                />
-              )}
-            >
-              <button>
-                {taskDueDate ? taskDueDate.toDateString() : 'Set date'}
-              </button>
-            </Popover>
+            <DatePickerField
+              // @ts-ignore
+              value={taskDueDate}
+              onChange={value => setTaskDueDate(value!)}
+            />
             <button
               onClick={async () => {
                 await remove({ variables: { input: { id } } });
