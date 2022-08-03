@@ -1,0 +1,17 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: deploy
+    image: node:18-alpine
+    environment:
+      VERCEL_TOKEN:
+        from_secret: VERCEL_TOKEN
+    commands:
+      - npm i -g vercel
+      - vercel link --project=tasks --confirm --token=$VERCEL_TOKEN
+      - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+      - vercel env pull --environment=production --token=$VERCEL_TOKEN
+      - vercel build --token=$VERCEL_TOKEN
+      - vercel deploy --prebuilt --token=$VERCEL_TOKEN
